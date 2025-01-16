@@ -51,11 +51,13 @@ const themes: Record<string, Theme> = {
     description: "Professional business template with modern design",
     layout: "default",
     styles: {
-      headerStyle: "bg-gradient-to-r from-blue-600 to-indigo-700 text-white",
+      headerStyle:
+        "bg-gradient-to-r from-blue-600 to-indigo-700 text-foreground",
       heroStyle: "bg-gray-50",
-      contentStyle: "bg-white",
-      buttonStyle: "bg-blue-600 hover:bg-blue-700 text-white",
-      cardStyle: "bg-white shadow-lg hover:shadow-xl transition-shadow",
+      contentStyle: "text-foreground",
+      buttonStyle: "bg-blue-600 hover:bg-blue-700 text-foreground",
+      cardStyle:
+        "bg-neutral-900 border border-neutral-800 hover:border-neutral-700 transition-colors",
     },
     content: {
       hero: {
@@ -126,10 +128,10 @@ const themes: Record<string, Theme> = {
     description: "Creative portfolio template with modern design",
     layout: "default",
     styles: {
-      headerStyle: "bg-black text-white",
-      heroStyle: "bg-neutral-900 text-white",
-      contentStyle: "bg-neutral-950 text-white",
-      buttonStyle: "bg-white text-black hover:bg-gray-100",
+      headerStyle: "bg-black text-foreground",
+      heroStyle: "bg-neutral-900 text-foreground",
+      contentStyle: "text-foreground",
+      buttonStyle: "bg-blue-600 hover:bg-blue-700 text-foreground",
       cardStyle:
         "bg-neutral-900 border border-neutral-800 hover:border-neutral-700 transition-colors",
     },
@@ -203,7 +205,8 @@ const themes: Record<string, Theme> = {
       heroStyle: "bg-gradient-to-b from-emerald-50 to-white",
       contentStyle: "bg-gray-50",
       buttonStyle: "bg-emerald-600 hover:bg-emerald-700 text-white",
-      cardStyle: "bg-white shadow-md hover:shadow-lg transition-shadow",
+      cardStyle:
+        "bg-neutral-900 border border-neutral-800 hover:border-neutral-700 transition-colors",
     },
     content: {
       hero: {
@@ -213,7 +216,7 @@ const themes: Record<string, Theme> = {
         actions: [
           {
             label: "Shop Now",
-            href: "/products",
+            href: "/shop",
             variant: "default",
           },
         ],
@@ -276,12 +279,12 @@ const themes: Record<string, Theme> = {
     description: "Blog magazine template with modern design",
     layout: "default",
     styles: {
-      headerStyle: "bg-rose-600 text-white",
+      headerStyle: "bg-rose-600 text-foreground",
       heroStyle: "bg-rose-50",
-      contentStyle: "bg-white",
-      buttonStyle: "bg-rose-600 hover:bg-rose-700 text-white",
+      contentStyle: "text-foreground",
+      buttonStyle: "bg-rose-600 hover:bg-rose-700 text-foreground",
       cardStyle:
-        "bg-white border border-gray-200 hover:border-gray-300 transition-colors",
+        "bg-background border border-gray-200 hover:border-gray-300 transition-colors",
     },
     content: {
       hero: {
