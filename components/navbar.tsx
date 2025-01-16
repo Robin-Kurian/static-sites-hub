@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -18,18 +18,32 @@ import {
 import { useState } from "react";
 import { useTheme } from "@/contexts/theme-context";
 
-const routes = [
+const baseRoutes = [
   {
     href: "/",
     label: "Home",
   },
+];
+
+const themeSpecificRoutes = {
+  "E-commerce Store": [
+    {
+      href: "/shop",
+      label: "Shop",
+    },
+  ],
+  "Blog Magazine": [
+    {
+      href: "/blog",
+      label: "Blogs",
+    },
+  ],
+};
+
+const commonRoutes = [
   {
     href: "/about",
     label: "About",
-  },
-  {
-    href: "/blog",
-    label: "Blog",
   },
   {
     href: "/contact",
@@ -58,8 +72,28 @@ const demoThemes = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const { currentTheme, setThemeName } = useTheme();
+
+  const handleThemeChange = (themeName: string) => {
+    setThemeName(themeName);
+    if (pathname !== "/") {
+      router.push("/");
+    }
+  };
+
+  // Combine routes
+  const routes = [
+    ...baseRoutes,
+    ...(currentTheme.name === "E-commerce Store"
+      ? themeSpecificRoutes["E-commerce Store"]
+      : []),
+    ...(currentTheme.name === "Blog Magazine"
+      ? themeSpecificRoutes["Blog Magazine"]
+      : []),
+    ...commonRoutes,
+  ];
 
   return (
     <header
@@ -71,9 +105,14 @@ export default function Navbar() {
       <div className="container mx-auto flex h-14 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center space-x-2">
-            <Palette className="h-6 w-6" />
-            <span className="font-bold inline-block">Themeify</span>
+            <Palette className="h-6 w-6 text-foreground" />
+            <span className="font-bold inline-block text-foreground">
+              Themeify
+            </span>
           </Link>
+          <div className="bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-medium">
+            {currentTheme.name}
+          </div>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             {routes.map((route) => (
               <Link
@@ -91,13 +130,14 @@ export default function Navbar() {
             ))}
           </nav>
         </div>
+
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button
               variant="ghost"
               className="px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5 text-foreground" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
@@ -119,6 +159,7 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
+
         <div className="flex items-center space-x-4">
           <span className="text-sm text-muted-foreground hidden sm:inline-block">
             Try different templates:
@@ -126,7 +167,7 @@ export default function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="mr-2">
-                <LayoutTemplate className="h-5 w-5" />
+                <LayoutTemplate className="h-5 w-5 text-foreground" />
                 <span className="sr-only">Switch template</span>
               </Button>
             </DropdownMenuTrigger>
@@ -136,8 +177,11 @@ export default function Navbar() {
               {demoThemes.map((theme) => (
                 <DropdownMenuItem
                   key={theme.name}
-                  className="flex flex-col items-start"
-                  onClick={() => setThemeName(theme.name)}
+                  className={cn(
+                    "flex flex-col items-start",
+                    currentTheme.name === theme.name && "bg-accent"
+                  )}
+                  onClick={() => handleThemeChange(theme.name)}
                 >
                   <span className="font-medium">{theme.name}</span>
                   <span className="text-xs text-muted-foreground">
