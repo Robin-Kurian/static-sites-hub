@@ -9,34 +9,30 @@ import {
   Newspaper,
 } from "lucide-react";
 
-type PageContent = {
+type BaseContent = {
   hero: {
     title: string;
     description: string;
+    actions?: Array<{
+      label: string;
+      href: string;
+      variant: "default" | "outline";
+      icon?: React.ComponentType<{ className?: string }>;
+    }>;
   };
   features: Array<{
     title: string;
     description: string;
-    icon: LucideIcon;
-  }>;
-  about: {
-    title: string;
-    description: string;
-    mission: string;
-    values: string[];
-  };
-  blog: Array<{
-    id: number;
-    title: string;
-    description: string;
-    date: string;
-    readTime: string;
-    category: string;
+    icon: React.ComponentType<{ className?: string }>;
   }>;
 };
 
+type ThemeLayout = "default" | "ecommerce" | "minimal";
+
 type Theme = {
   name: string;
+  description: string;
+  layout: ThemeLayout;
   styles: {
     headerStyle: string;
     heroStyle: string;
@@ -44,12 +40,16 @@ type Theme = {
     buttonStyle: string;
     cardStyle: string;
   };
-  content: PageContent;
+  content: BaseContent & {
+    [key: string]: any; // Allow additional content based on theme type
+  };
 };
 
 const themes: Record<string, Theme> = {
   "Modern Business": {
     name: "Modern Business",
+    description: "Professional business template with modern design",
+    layout: "default",
     styles: {
       headerStyle: "bg-gradient-to-r from-blue-600 to-indigo-700 text-white",
       heroStyle: "bg-gray-50",
@@ -62,6 +62,18 @@ const themes: Record<string, Theme> = {
         title: "Transform Your Business with Modern Solutions",
         description:
           "Empowering businesses with cutting-edge technology and innovative strategies for sustainable growth.",
+        actions: [
+          {
+            label: "Get Started",
+            href: "/contact",
+            variant: "default",
+          },
+          {
+            label: "Learn More",
+            href: "/about",
+            variant: "outline",
+          },
+        ],
       },
       features: [
         {
@@ -111,6 +123,8 @@ const themes: Record<string, Theme> = {
   },
   "Creative Portfolio": {
     name: "Creative Portfolio",
+    description: "Creative portfolio template with modern design",
+    layout: "default",
     styles: {
       headerStyle: "bg-black text-white",
       heroStyle: "bg-neutral-900 text-white",
@@ -124,6 +138,18 @@ const themes: Record<string, Theme> = {
         title: "Creating Digital Art & Design",
         description:
           "Bringing creative visions to life through innovative design and artistic expression.",
+        actions: [
+          {
+            label: "View Portfolio",
+            href: "/portfolio",
+            variant: "default",
+          },
+          {
+            label: "Contact Us",
+            href: "/contact",
+            variant: "outline",
+          },
+        ],
       },
       features: [
         {
@@ -170,10 +196,12 @@ const themes: Record<string, Theme> = {
   },
   "E-commerce Store": {
     name: "E-commerce Store",
+    description: "Full-featured online store template",
+    layout: "ecommerce",
     styles: {
       headerStyle: "bg-emerald-600 text-white",
-      heroStyle: "bg-emerald-50",
-      contentStyle: "bg-white",
+      heroStyle: "bg-gradient-to-b from-emerald-50 to-white",
+      contentStyle: "bg-gray-50",
       buttonStyle: "bg-emerald-600 hover:bg-emerald-700 text-white",
       cardStyle: "bg-white shadow-md hover:shadow-lg transition-shadow",
     },
@@ -182,6 +210,13 @@ const themes: Record<string, Theme> = {
         title: "Shop the Latest Trends",
         description:
           "Discover our curated collection of premium products at amazing prices.",
+        actions: [
+          {
+            label: "Shop Now",
+            href: "/products",
+            variant: "default",
+          },
+        ],
       },
       features: [
         {
@@ -225,10 +260,21 @@ const themes: Record<string, Theme> = {
           category: "Lifestyle",
         },
       ],
+      products: [
+        {
+          id: 1,
+          name: "Premium Product",
+          price: 99.99,
+          image: "https://images.unsplash.com/photo-1...",
+        },
+        // ... more products
+      ],
     },
   },
   "Blog Magazine": {
     name: "Blog Magazine",
+    description: "Blog magazine template with modern design",
+    layout: "default",
     styles: {
       headerStyle: "bg-rose-600 text-white",
       heroStyle: "bg-rose-50",
@@ -242,6 +288,18 @@ const themes: Record<string, Theme> = {
         title: "Stories That Matter",
         description:
           "Discover thought-provoking articles on culture, technology, and lifestyle.",
+        actions: [
+          {
+            label: "Browse Articles",
+            href: "/articles",
+            variant: "default",
+          },
+          {
+            label: "Subscribe",
+            href: "/subscribe",
+            variant: "outline",
+          },
+        ],
       },
       features: [
         {
@@ -320,3 +378,5 @@ export function useTheme() {
   }
   return context;
 }
+
+export type { Theme };
