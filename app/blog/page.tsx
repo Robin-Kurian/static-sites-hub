@@ -11,6 +11,15 @@ import {
 import { useTheme } from "@/contexts/theme-context";
 import { cn } from "@/lib/utils";
 
+type BlogPost = {
+  id: string;
+  title: string;
+  date: string;
+  readTime: string;
+  description: string;
+  category: string;
+};
+
 export default function BlogPage() {
   const { currentTheme } = useTheme();
   const { blog } = currentTheme.content;
@@ -20,7 +29,7 @@ export default function BlogPage() {
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-3xl font-bold mb-8 text-center">Blog</h1>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-          {blog.map((post) => (
+          {blog.map((post: BlogPost) => (
             <Link key={post.id} href={`/blog/${post.id}`}>
               <Card
                 className={cn(
