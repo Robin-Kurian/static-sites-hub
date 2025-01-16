@@ -27,9 +27,11 @@ export default function Home() {
 
 function DefaultLayout({ theme }: LayoutProps) {
   const { hero, features } = theme.content;
+  const { currentTheme } = useTheme();
+
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 ">
       <section
         className={cn(
           "space-y-6 pb-4 pt-6 md:pb-6 md:pt-10 lg:py-16",
@@ -37,7 +39,7 @@ function DefaultLayout({ theme }: LayoutProps) {
         )}
       >
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center mx-auto">
-          <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-center">
+          <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
             {hero.title}
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8 text-center">
@@ -67,7 +69,7 @@ function DefaultLayout({ theme }: LayoutProps) {
         </div>
       </section>
       <section
-        className={cn("py-4 md:py-6 lg:py-12", theme.styles.contentStyle)}
+        className={cn("py-4 md:py-6 lg:py-12", currentTheme.styles.contentStyle)}
       >
         <div className="container">
           <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
