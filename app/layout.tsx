@@ -11,19 +11,17 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://robink.netlify.app"),
   title: "Themeify - Modern Website Templates",
-  description:
-    "Beautiful, customizable website templates demo",
+  description: "Beautiful, customizable website templates demo",
   keywords: "Next.js, Tailwind CSS, templates, modern website, customizable",
   authors: [{ name: "Robin K", url: "https://robink.netlify.app" }],
   openGraph: {
     title: "Themeify - Modern Website Templates",
-    description:
-      "Beautiful, customizable website templates demo",
+    description: "Beautiful, customizable website templates demo",
     url: "https://robink.netlify.app",
     siteName: "Themeify",
     images: [
       {
-        url: "https://robink.netlify.app/favicon.ico", 
+        url: "https://staticsiteshub.vercel.app/images/themeify.jpg",
         width: 800,
         height: 600,
         alt: "Themeify Logo",
@@ -37,7 +35,7 @@ export const metadata: Metadata = {
     title: "Themeify - Modern Website Templates",
     description:
       "Beautiful, customizable website templates built with Next.js and Tailwind CSS",
-    images: ["https://robink.netlify.app/favicon.ico"], // Replace with your logo URL
+    images: ["https://staticsiteshub.vercel.app/images/themeify.jpg"],
   },
 };
 
