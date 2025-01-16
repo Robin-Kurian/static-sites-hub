@@ -1,109 +1,81 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "sonner"
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-})
+import { useTheme } from "@/contexts/theme-context";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function ContactPage() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  })
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast.success("Message sent successfully!")
-    form.reset()
-  }
+  const { currentTheme } = useTheme();
 
   return (
-    <div className="flex-1">
-      <div className="container max-w-2xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold mb-8">Contact Us</h1>
-        <div className="space-y-8">
-          <div className="prose dark:prose-invert">
-            <p>
-              Have a question or want to get in touch? Fill out the form below and we'll get back to you as soon as possible.
-            </p>
-          </div>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="john@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Message</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Your message here..."
-                        className="resize-none"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Send Message</Button>
+    <div className={cn("flex-1", currentTheme.styles.contentStyle)}>
+      <div className="container max-w-6xl mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
+        <div className="grid md:grid-cols-2 gap-12">
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
+            <form className="space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium">
+                  Name
+                </label>
+                <Input id="name" placeholder="Your name" />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">
+                  Email
+                </label>
+                <Input id="email" type="email" placeholder="your@email.com" />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium">
+                  Message
+                </label>
+                <Textarea id="message" placeholder="Your message" rows={5} />
+              </div>
+              <Button className={currentTheme.styles.buttonStyle}>
+                Send Message
+              </Button>
             </form>
-          </Form>
+          </div>
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-semibold mb-6">
+                Contact Information
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <Mail className="h-5 w-5" />
+                  <span>dev.robinkurian@gmail.com</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Phone className="h-5 w-5" />
+                  <span>(+91) 8848824751</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-5 w-5" />
+                  <span>221B Baker Street 🤠</span>
+                </div>
+              </div>
+            </div>
+            <div
+              className={cn("p-6 rounded-lg", currentTheme.styles.cardStyle)}
+            >
+              <h3 className="font-semibold mb-2">Business Hours</h3>
+              <p className="text-sm text-muted-foreground">
+                Monday - Friday: 9:00 AM - 6:00 PM
+                <br />
+                Saturday: 10:00 AM - 4:00 PM
+                <br />
+                Sunday: Closed
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
