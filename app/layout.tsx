@@ -9,7 +9,7 @@ import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://robink.netlify.app"), // Replace with your actual website URL
+  metadataBase: new URL("https://robink.netlify.app"),
   title: "Themeify - Modern Website Templates",
   description:
     "Beautiful, customizable website templates demo",
