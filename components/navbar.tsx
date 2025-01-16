@@ -1,16 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/mode-toggle"
-import { Menu, Palette } from "lucide-react"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Menu, Palette, LayoutTemplate } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,9 +14,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useState } from "react"
-import { useTheme } from "@/contexts/theme-context"
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import { useTheme } from "@/contexts/theme-context";
 
 const routes = [
   {
@@ -39,7 +35,7 @@ const routes = [
     href: "/contact",
     label: "Contact",
   },
-]
+];
 
 const demoThemes = [
   {
@@ -58,22 +54,25 @@ const demoThemes = [
     name: "Blog Magazine",
     description: "Content-focused blog and magazine layout",
   },
-]
+];
 
 export default function Navbar() {
-  const pathname = usePathname()
-  const [open, setOpen] = useState(false)
-  const { currentTheme, setThemeName } = useTheme()
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const { currentTheme, setThemeName } = useTheme();
 
   return (
-    <header className={cn(
-      "sticky top-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60",
-      currentTheme.styles.headerStyle
-    )}>
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        currentTheme.styles.headerStyle
+      )}
+    >
       <div className="container mx-auto flex h-14 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold">ModernSite</span>
+            <Palette className="h-6 w-6" />
+            <span className="font-bold inline-block">Themeify</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             {routes.map((route) => (
@@ -82,7 +81,9 @@ export default function Navbar() {
                 href={route.href}
                 className={cn(
                   "transition-colors hover:text-foreground/80",
-                  pathname === route.href ? "text-foreground" : "text-foreground/60"
+                  pathname === route.href
+                    ? "text-foreground"
+                    : "text-foreground/60"
                 )}
               >
                 {route.label}
@@ -118,16 +119,19 @@ export default function Navbar() {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-4">
+          <span className="text-sm text-muted-foreground hidden sm:inline-block">
+            Try different templates:
+          </span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="mr-2">
-                <Palette className="h-5 w-5" />
-                <span className="sr-only">Select demo theme</span>
+                <LayoutTemplate className="h-5 w-5" />
+                <span className="sr-only">Switch template</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[240px]">
-              <DropdownMenuLabel>Demo Themes</DropdownMenuLabel>
+              <DropdownMenuLabel>Switch Template Style</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {demoThemes.map((theme) => (
                 <DropdownMenuItem
@@ -147,5 +151,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  )
+  );
 }
